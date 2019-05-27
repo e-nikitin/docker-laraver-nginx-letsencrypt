@@ -12,3 +12,5 @@ docker-compose run --rm --entrypoint "\
     -out '$path/fullchain.pem' \
     -subj '/CN=localhost'" certbot
 echo
+
+openssl dhparam -out ./certbot/conf/ssl-dhparams.pem 2048
