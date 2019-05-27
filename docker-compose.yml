@@ -1,0 +1,37 @@
+version: '3.7'
+
+
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ${APP_PATH_HOST}:/var/www/html
+      - ./certbot/www:/var/www/certbot
+      - ./certbot/conf:/etc/letsencrypt
+      - ./nginx:/etc/nginx/conf.d
+    links:
+      - php
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+
+  php:
+    build: ./php
+    volumes:
+      - ${APP_PATH_HOST}:/var/www/html
+
+#  composer:
+#    image: composer
+#    volumes:
+#      - ${APP_PATH_HOST}:${APP_PATH_CONTAINER}
+#    working_dir: ${APP_PATH_CONTAINER}
+#    command: composer install
