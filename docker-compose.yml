@@ -29,9 +29,9 @@ services:
     volumes:
       - ${APP_PATH_HOST}:/var/www/html
 
-#  composer:
-#    image: composer
-#    volumes:
-#      - ${APP_PATH_HOST}:${APP_PATH_CONTAINER}
-#    working_dir: ${APP_PATH_CONTAINER}
-#    command: composer install
+  composer:
+    image: composer
+    volumes:
+      - ${APP_PATH_HOST}:/var/www/html
+    working_dir: /var/www/html
+    command: composer install
