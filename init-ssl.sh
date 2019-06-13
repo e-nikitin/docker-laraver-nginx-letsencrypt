@@ -15,4 +15,4 @@ echo
 
 mkdir -p "$data_path/conf"
 curl -s https://raw.githubusercontent.com/certbot/certbot/master/certbot-nginx/certbot_nginx/options-ssl-nginx.conf > "$data_path/conf/options-ssl-nginx.conf"
-openssl dhparam -out ./certbot/conf/ssl-dhparams.pem 4096
+curl -s https://raw.githubusercontent.com/certbot/certbot/master/certbot/ssl-dhparams.pem > "$data_path/conf/ssl-dhparams.pem"
